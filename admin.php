@@ -12,7 +12,7 @@ $error = '';
 $success = '';
 
 // Definisanje kategorija
-$kategorije = ["Voće", "Povrće", "Meso", "Mlečni proizvodi", "Pekarski proizvodi"];
+$kategorije = ["Voce", "Povrce", "Meso", "Mlecni proizvodi", "Pekarski proizvodi"];
 
 // Brisanje proizvoda
 if (isset($_GET['delete_id'])) {
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="nav-link" href="admin.php">Admin Panel</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="orders.php">Pregled Porudžbina</a>
+                <a class="nav-link" href="orders.php">Pregled Porudzbina</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">Odjavi se</a>
@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '</tr>';
                 }
             } else {
-                echo '<tr><td colspan="7" class="text-center">Nema pronađenih proizvoda.</td></tr>';
+                echo '<tr><td colspan="7" class="text-center">Nema pronadjenih proizvoda.</td></tr>';
             }
 
             $conn->close();

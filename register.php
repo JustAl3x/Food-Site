@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Provera da li email već postoji
+    // Provera da li email vec postoji
     $sql = "SELECT * FROM admin WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $error = "Email adresa je već registrovana.";
+        $error = "Email adresa je vec registrovana.";
     } else {
         // Unos novog admina u bazu
         $sql = "INSERT INTO admin (ime, prezime, email, password) VALUES (?, ?, ?, ?)";
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssss", $ime, $prezime, $email, $hashed_password);
 
         if ($stmt->execute()) {
-            $success = "Uspesno ste se registrovali. Možete se prijaviti.";
+            $success = "Uspesno ste se registrovali. Mozete se prijaviti.";
             header("Location: login.php");
             exit();
         } else {

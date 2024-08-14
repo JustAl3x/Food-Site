@@ -15,7 +15,7 @@ if (!isset($_SESSION['admin_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregled Porudžbina</title>
+    <title>Pregled Porudzbina</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -31,7 +31,7 @@ if (!isset($_SESSION['admin_id'])) {
                 <a class="nav-link" href="admin.php">Admin Panel</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="orders.php">Pregled Porudžbina</a>
+                <a class="nav-link" href="orders.php">Pregled Porudzbina</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">Odjavi se</a>
@@ -41,11 +41,11 @@ if (!isset($_SESSION['admin_id'])) {
 </nav>
 
 <div class="container">
-    <h2 class="my-4">Sve Porudžbine</h2>
+    <h2 class="my-4">Sve Porudzbine</h2>
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID Porudžbine</th>
+                <th>ID Porudzbine</th>
                 <th>Korisnik</th>
                 <th>Datum</th>
                 <th>Stavke</th>
@@ -53,7 +53,7 @@ if (!isset($_SESSION['admin_id'])) {
         </thead>
         <tbody>
             <?php
-            // Dohvatanje porudžbina
+            // Dohvatanje porudzbina
             $sql = "SELECT p.id, p.datum, k.ime, k.prezime FROM porudzbine p JOIN korisnici k ON p.user_id = k.id ORDER BY p.datum DESC";
             $result = $conn->query($sql);
 
@@ -64,7 +64,7 @@ if (!isset($_SESSION['admin_id'])) {
                     echo '<td>' . $row["ime"] . ' ' . $row["prezime"] . '</td>';
                     echo '<td>' . $row["datum"] . '</td>';
                     echo '<td>';
-                    // Dohvatanje stavki porudžbine
+                    // Dohvatanje stavki porudzbine
                     $order_id = $row["id"];
                     $sql_items = "SELECT ps.kolicina, ps.cena, pr.ime FROM porudzbine_stavke ps JOIN proizvodi pr ON ps.proizvod_id = pr.id WHERE ps.porudzbina_id = ?";
                     $stmt = $conn->prepare($sql_items);
@@ -85,7 +85,7 @@ if (!isset($_SESSION['admin_id'])) {
                     echo '</tr>';
                 }
             } else {
-                echo '<tr><td colspan="4" class="text-center">Nema pronađenih porudžbina.</td></tr>';
+                echo '<tr><td colspan="4" class="text-center">Nema pronadjenih porudzbina.</td></tr>';
             }
 
             $conn->close();

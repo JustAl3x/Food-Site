@@ -149,11 +149,11 @@ CREATE TABLE `proizvodi` (
 --
 
 INSERT INTO `proizvodi` (`id`, `ime`, `opis`, `cena`, `kategorija`, `slika`) VALUES
-(6, 'Pica', 'Pica sa kačkavaljem i pečurkama.', '1699.00', 'Pekarski proizvodi', 'slike/pizza.jpg'),
-(7, 'Narandza', 'Prirodna sveža i sočna narandza. ', '199.00', 'Voće', 'slike/narandza.jpg'),
-(8, 'Paradajz', 'Paradajz iz baste organski.', '259.00', 'Povrće', 'slike/paradajz.jpeg'),
-(9, 'Biftek', 'Teleći biftek najvećeg kvaliteta.', '2899.00', 'Meso', 'slike/biftek.jpg'),
-(10, 'Milksejk', 'Osvežavajuci milksejk sa ukusima čokolade i jagode.', '1299.00', 'Mlečni proizvodi', 'slike/milksejk.jpg');
+(6, 'Pica', 'Pica sa kackavaljem i pecurkama.', '1699.00', 'Pekarski proizvodi', 'slike/pizza.jpg'),
+(7, 'Narandza', 'Prirodna sveza i socna narandza. ', '199.00', 'Voce', 'slike/narandza.jpg'),
+(8, 'Paradajz', 'Paradajz iz baste organski.', '259.00', 'Povrce', 'slike/paradajz.jpeg'),
+(9, 'Biftek', 'Teleci biftek najveceg kvaliteta.', '2899.00', 'Meso', 'slike/biftek.jpg'),
+(10, 'Milksejk', 'Osvezavajuci milksejk sa ukusima cokolade i jagode.', '1299.00', 'Mlecni proizvodi', 'slike/milksejk.jpg');
 
 --
 -- Indexes for dumped tables

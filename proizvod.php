@@ -2,7 +2,7 @@
 include 'db_connect.php';
 
 if (!isset($_GET['id'])) {
-    echo "Proizvod nije pronađen.";
+    echo "Proizvod nije pronadjen.";
     exit();
 }
 
@@ -14,7 +14,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows == 0) {
-    echo "Proizvod nije pronađen.";
+    echo "Proizvod nije pronadjen.";
     exit();
 }
 
@@ -118,7 +118,7 @@ $conn->close();
     </div>
 
     <footer>
-        <p>&copy; 2023 Distribucija Hrane. Sva prava zadržana.</p>
+        <p>&copy; 2023 Distribucija Hrane. Sva prava zadrzana.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

@@ -3,7 +3,7 @@ session_start();
 include 'db_connect.php';
 
 if (!isset($_SESSION['user_id'])) {
-    echo 'Morate biti prijavljeni da biste završili porudžbinu.';
+    echo 'Morate biti prijavljeni da biste zavrsili porudžbinu.';
     exit();
 }
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 
-    echo 'Porudžbina je uspešno završena.';
+    echo 'Porudžbina je uspesno zavrsena.';
     $conn->close();
 }
 ?>

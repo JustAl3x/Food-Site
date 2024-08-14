@@ -103,7 +103,7 @@ $conn->close();
                 <div class="form-group">
                     <textarea class="form-control" name="komentar" rows="3" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Pošalji</button>
+                <button type="submit" class="btn btn-primary">Posalji</button>
             </form>
         </div>
 

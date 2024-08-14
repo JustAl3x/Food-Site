@@ -27,11 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssss", $ime, $prezime, $email, $hashed_password);
 
         if ($stmt->execute()) {
-            $success = "Uspešno ste se registrovali. Možete se prijaviti.";
+            $success = "Uspesno ste se registrovali. Možete se prijaviti.";
             header("Location: login.php");
             exit();
         } else {
-            $error = "Došlo je do greške prilikom registracije.";
+            $error = "Doslo je do greske prilikom registracije.";
         }
     }
 
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="password">Šifra</label>
+                <label for="password">Sifra</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary">Registruj se</button>

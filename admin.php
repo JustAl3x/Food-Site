@@ -21,9 +21,9 @@ if (isset($_GET['delete_id'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $delete_id);
     if ($stmt->execute()) {
-        $success = "Proizvod je uspešno obrisan.";
+        $success = "Proizvod je uspesno obrisan.";
     } else {
-        $error = "Došlo je do greške prilikom brisanja proizvoda.";
+        $error = "Doslo je do greske prilikom brisanja proizvoda.";
     }
     $stmt->close();
 }
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (move_uploaded_file($_FILES["slika"]["tmp_name"], $target_file)) {
                 $slika = $target_file;
             } else {
-                $error = "Došlo je do greške prilikom upload-a slike.";
+                $error = "Doslo je do greske prilikom upload-a slike.";
             }
         } else {
             $error = "Fajl nije slika.";
@@ -65,9 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssdss", $ime, $opis, $cena, $kategorija, $slika);
 
         if ($stmt->execute()) {
-            $success = "Proizvod je uspešno dodat.";
+            $success = "Proizvod je uspesno dodat.";
         } else {
-            $error = "Došlo je do greške prilikom dodavanja proizvoda.";
+            $error = "Doslo je do greske prilikom dodavanja proizvoda.";
         }
 
         $stmt->close();
@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '<td>' . $row["cena"] . '</td>';
                     echo '<td>' . $row["kategorija"] . '</td>';
                     echo '<td><img src="' . $row["slika"] . '" alt="' . $row["ime"] . '" style="width: 100px; height: auto;"></td>';
-                    echo '<td><a href="admin.php?delete_id=' . $row["id"] . '" class="btn btn-danger btn-sm">Obriši</a></td>';
+                    echo '<td><a href="admin.php?delete_id=' . $row["id"] . '" class="btn btn-danger btn-sm">Obrisi</a></td>';
                     echo '</tr>';
                 }
             } else {

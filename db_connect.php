@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "lazar";
-$password = "password";
+$username = "root";
+$password = "";
 $dbname = "Distribucija_hrane";
 
 // Kreiranje konekcije

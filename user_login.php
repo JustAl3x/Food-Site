@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Priprema i izvršavanje SQL upita
+    // Priprema i izvrsavanje SQL upita
     $sql = "SELECT * FROM korisnici WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
@@ -17,14 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        // Provera šifre
+        // Provera sifre
         if (password_verify($password, $row['password'])) {
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['user_name'] = $row['ime'];
             header("Location: index.php");
             exit();
         } else {
-            $error = "Pogrešna šifra.";
+            $error = "Pogresna sifra.";
         }
     } else {
         $error = "Nema naloga sa ovim emailom.";

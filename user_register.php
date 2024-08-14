@@ -27,11 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssss", $ime, $prezime, $email, $hashed_password);
 
         if ($stmt->execute()) {
-            $success = "Uspešno ste se registrovali. Možete se prijaviti.";
+            $success = "Uspesno ste se registrovali. Možete se prijaviti.";
             header("Location: index.php");
             exit();
         } else {
-            $error = "Došlo je do greške prilikom registracije.";
+            $error = "Doslo je do greske prilikom registracije.";
         }
     }
 

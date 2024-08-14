@@ -20,7 +20,7 @@
             margin-top: 100px;
             margin-bottom: 100px;  
             flex: 1;
-            background-color: rgba(255, 255, 255, 0.8); /* Bela pozadina sa prozirnošću */
+            background-color: rgba(255, 255, 255, 0.8); /* Bela pozadina sa prozirnosću */
             padding: 20px;
             border-radius: 8px;
         }
@@ -215,13 +215,13 @@ session_start();
 
     <div class="cart-modal" id="cartModal">
         <div class="cart-modal-header">
-            <h5>Vaša korpa</h5>
+            <h5>Vasa korpa</h5>
         </div>
         <div class="cart-modal-body" id="cartItems">
             <p>Korpa je prazna.</p>
         </div>
         <div class="cart-modal-footer">
-            <button class="btn btn-primary" id="checkout">Završi porudžbinu</button>
+            <button class="btn btn-primary" id="checkout">Zavrsi porudžbinu</button>
         </div>
     </div>
 
@@ -310,7 +310,7 @@ session_start();
             }
 
             <?php if (!isset($_SESSION['user_id'])): ?>
-                alert('Morate biti prijavljeni da biste završili porudžbinu.');
+                alert('Morate biti prijavljeni da biste zavrsili porudžbinu.');
                 return;
             <?php endif; ?>
 
@@ -319,7 +319,7 @@ session_start();
                 method: 'POST',
                 data: { cart: cart },
                 success: function(response) {
-                    alert('Porudžbina je uspešno završena.');
+                    alert('Porudžbina je uspesno zavrsena.');
                     cart = [];
                     updateCart();
                     $('#cartModal').hide();
@@ -345,7 +345,7 @@ session_start();
                             <input type="email" class="form-control" id="loginEmail" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="loginPassword">Šifra</label>
+                            <label for="loginPassword">Sifra</label>
                             <input type="password" class="form-control" id="loginPassword" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Prijavi se</button>
@@ -381,7 +381,7 @@ session_start();
                             <input type="email" class="form-control" id="registerEmail" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="registerPassword">Šifra</label>
+                            <label for="registerPassword">Sifra</label>
                             <input type="password" class="form-control" id="registerPassword" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Registruj</button>

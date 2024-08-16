@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `ime`, `prezime`, `email`, `password`) VALUES
-(1, 'Lazar', 'Birtasevic', 'lazar.birtasevic1@gmail.com', '$2y$10$t/UO2KptRk/YqHgojFFtAu.LVn/qEAz8uuvO5y.HHFfZjrTzekMue');
+(1, 'Aleksandar', 'Markovic', 'Aleksandar.markovic@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -81,8 +81,7 @@ CREATE TABLE `korisnici` (
 --
 
 INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `email`, `password`) VALUES
-(1, 'Lazar', 'Birtasevic', 'lazar.birtasevic1@gmail.com', '$2y$10$pqLqpWW235PpbUvaX/Iwt.MJUePxnFxEBWuSPIuPhVtzvfWQCnDEC'),
-(2, 'Ognjen', 'Birtasevic', 'ognjen@gmail.com', '$2y$10$D2lJ1v1q7SCp/lhFFFCh5uwlnddqZOe8CJAYZkTWVynr5WNhQJmhe');
+(1, 'Alekssandar', 'Markovic', 'sale123@gmail.com.com', '12');
 
 -- --------------------------------------------------------
 

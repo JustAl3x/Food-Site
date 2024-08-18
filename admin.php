@@ -12,7 +12,7 @@ $error = '';
 $success = '';
 
 // Definisanje kategorija
-$kategorije = ["Voce", "Povrce", "Meso", "Mlecni proizvodi", "Pekarski proizvodi"];
+$kategorije = ["Voće", "Povrće", "Meso", "Mlečni proizvodi", "Pekarski proizvodi"];
 
 // Brisanje proizvoda
 if (isset($_GET['delete_id'])) {
@@ -21,15 +21,15 @@ if (isset($_GET['delete_id'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $delete_id);
     if ($stmt->execute()) {
-        $success = "Proizvod je uspesno obrisan.";
+        $success = "Proizvod je uspešno obrisan.";
     } else {
-        $error = "Doslo je do greske prilikom brisanja proizvoda.";
+        $error = "Došlo je do greške prilikom brisanja proizvoda.";
     }
     $stmt->close();
 }
 
 // Dodavanje novog proizvoda
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['update_id'])) {
     $ime = $_POST['ime'];
     $opis = $_POST['opis'];
     $cena = $_POST['cena'];
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (move_uploaded_file($_FILES["slika"]["tmp_name"], $target_file)) {
                 $slika = $target_file;
             } else {
-                $error = "Doslo je do greske prilikom upload-a slike.";
+                $error = "Došlo je do greške prilikom upload-a slike.";
             }
         } else {
             $error = "Fajl nije slika.";
@@ -65,13 +65,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssdss", $ime, $opis, $cena, $kategorija, $slika);
 
         if ($stmt->execute()) {
-            $success = "Proizvod je uspesno dodat.";
+            $success = "Proizvod je uspešno dodat.";
         } else {
-            $error = "Doslo je do greske prilikom dodavanja proizvoda.";
+            $error = "Došlo je do greške prilikom dodavanja proizvoda.";
         }
 
         $stmt->close();
     }
+}
+
+// Ažuriranje proizvoda
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
+    $update_id = $_POST['update_id'];
+    $ime = $_POST['ime'];
+    $opis = $_POST['opis'];
+    $cena = $_POST['cena'];
+    $kategorija = $_POST['kategorija'];
+
+    // Ažuriranje proizvoda u bazi
+    $sql = "UPDATE proizvodi SET ime = ?, opis = ?, cena = ?, kategorija = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssdsi", $ime, $opis, $cena, $kategorija, $update_id);
+
+    if ($stmt->execute()) {
+        echo json_encode(["status" => "success", "message" => "Proizvod je uspešno ažuriran."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Došlo je do greške prilikom ažuriranja proizvoda."]);
+    }
+
+    $stmt->close();
+    exit();
 }
 ?>
 
@@ -96,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="nav-link" href="admin.php">Admin Panel</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="orders.php">Pregled Porudzbina</a>
+                <a class="nav-link" href="orders.php">Pregled Porudžbina</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">Odjavi se</a>
@@ -136,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="form-group">
             <label for="slika">Slika</label>
-            <input type="file" class="form-control-file" id="slika" name="slika" required>
+            <input type="file" class="form-control-file" id="slika" name="slika">
         </div>
         <button type="submit" class="btn btn-primary">Dodaj Proizvod</button>
     </form>
@@ -169,11 +192,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '<td>' . $row["cena"] . '</td>';
                     echo '<td>' . $row["kategorija"] . '</td>';
                     echo '<td><img src="' . $row["slika"] . '" alt="' . $row["ime"] . '" style="width: 100px; height: auto;"></td>';
-                    echo '<td><a href="admin.php?delete_id=' . $row["id"] . '" class="btn btn-danger btn-sm">Obrisi</a></td>';
+                    echo '<td><a href="#" class="btn btn-warning btn-sm edit-btn" data-id="' . $row["id"] . '">Izmeni</a> <a href="admin.php?delete_id=' . $row["id"] . '" class="btn btn-danger btn-sm">Obriši</a></td>';
                     echo '</tr>';
                 }
             } else {
-                echo '<tr><td colspan="7" class="text-center">Nema pronadjenih proizvoda.</td></tr>';
+                echo '<tr><td colspan="7" class="text-center">Nema pronađenih proizvoda.</td></tr>';
             }
 
             $conn->close();
@@ -182,7 +205,92 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </table>
 </div>
 
+<!-- Modal za ažuriranje proizvoda -->
+<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">Ažuriraj Proizvod</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm" method="post">
+                    <input type="hidden" name="update_id" id="update_id">
+                    <div class="form-group">
+                        <label for="edit_ime">Ime Proizvoda</label>
+                        <input type="text" class="form-control" id="edit_ime" name="ime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_opis">Opis</label>
+                        <textarea class="form-control" id="edit_opis" name="opis" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_cena">Cena</label>
+                        <input type="number" step="0.01" class="form-control" id="edit_cena" name="cena" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_kategorija">Kategorija</label>
+                        <select class="form-control" id="edit_kategorija" name="kategorija" required>
+                            <?php foreach ($kategorije as $kat): ?>
+                                <option value="<?php echo $kat; ?>"><?php echo $kat; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ažuriraj Proizvod</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.edit-btn').on('click', function() {
+        var id = $(this).data('id');
+        $.ajax({
+            url: 'get_product.php',
+            type: 'GET',
+            data: { id: id },
+            success: function(response) {
+                var product = JSON.parse(response);
+                $('#update_id').val(product.id);
+                $('#edit_ime').val(product.ime);
+                $('#edit_opis').val(product.opis);
+                $('#edit_cena').val(product.cena);
+                $('#edit_kategorija').val(product.kategorija);
+                $('#editProductModal').modal('show');
+            }
+        });
+    });
+
+    $('#editProductForm').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            url: 'admin.php',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                var result = JSON.parse(response);
+                if (result.status === "success") {
+                    var id = $('#update_id').val();
+                    var row = $('a[data-id="' + id + '"]').closest('tr');
+                    row.find('td:eq(1)').text($('#edit_ime').val());
+                    row.find('td:eq(2)').text($('#edit_opis').val());
+                    row.find('td:eq(3)').text($('#edit_cena').val());
+                    row.find('td:eq(4)').text($('#edit_kategorija').val());
+                    $('#editProductModal').modal('hide');
+                } else {
+                    alert(result.message);
+                }
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

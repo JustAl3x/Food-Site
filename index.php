@@ -20,7 +20,7 @@
             margin-top: 100px;
             margin-bottom: 100px;  
             flex: 1;
-            background-color: rgba(255, 255, 255, 0.8); /* Bela pozadina sa prozirnoscu */
+            background-color: rgba(255, 255, 255, 0.8); /* Bela pozadina sa prozirnošću */
             padding: 20px;
             border-radius: 8px;
         }
@@ -57,7 +57,7 @@
             transform: scale(1.2);
         }
         .cart img {
-            width: 30px; /* Smanjite velicinu slike */
+            width: 30px; /* Smanjite veličinu slike */
             height: 30px;
         }
         .cart-modal {
@@ -116,6 +116,14 @@
 <?php
 session_start();
 ?>
+
+<!-- Prikazivanje poruke o grešci -->
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger text-center">
+        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+
 <!-- Navigacioni bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="index.php">Distribucija Hrane</a>
@@ -149,7 +157,7 @@ session_start();
         <!-- Filter za pretragu -->
         <div class="row mb-4">
             <div class="col-md-6 mx-auto">
-                <input type="text" id="search" class="form-control" placeholder="Pretrazi proizvode...">
+                <input type="text" id="search" class="form-control" placeholder="Pretraži proizvode...">
             </div>
         </div>
 
@@ -158,10 +166,10 @@ session_start();
             <div class="col-md-6 mx-auto">
                 <select id="category-filter" class="form-control">
                     <option value="">Sve kategorije</option>
-                    <option value="Voce">Voce</option>
-                    <option value="Povrce">Povrce</option>
+                    <option value="Voće">Voće</option>
+                    <option value="Povrće">Povrće</option>
                     <option value="Meso">Meso</option>
-                    <option value="Mlecni proizvodi">Mlecni proizvodi</option>
+                    <option value="Mlečni proizvodi">Mlečni proizvodi</option>
                     <option value="Pekarski proizvodi">Pekarski proizvodi</option>
                 </select>
             </div>
@@ -170,7 +178,7 @@ session_start();
         <!-- Lista proizvoda -->
         <div class="row" id="product-list">
             <?php
-            // Ukljucivanje fajla za konekciju sa bazom podataka
+            // Uključivanje fajla za konekciju sa bazom podataka
             include 'db_connect.php';
 
             // Dohvatanje proizvoda
@@ -197,7 +205,7 @@ session_start();
                     echo '</div>';
                 }
             } else {
-                echo '<div class="col-12"><p class="text-center">Nema pronadjenih proizvoda.</p></div>';
+                echo '<div class="col-12"><p class="text-center">Nema pronađenih proizvoda.</p></div>';
             }
 
             $conn->close();
@@ -206,7 +214,7 @@ session_start();
     </div>
 
     <footer>
-        <p>&copy; 2023 Distribucija Hrane. Sva prava zadrzana.</p>
+        <p>&copy; 2023 Distribucija Hrane. Sva prava zadržana.</p>
     </footer>
 
     <div class="cart" id="cart">
@@ -215,13 +223,13 @@ session_start();
 
     <div class="cart-modal" id="cartModal">
         <div class="cart-modal-header">
-            <h5>Vasa korpa</h5>
+            <h5>Vaša korpa</h5>
         </div>
         <div class="cart-modal-body" id="cartItems">
             <p>Korpa je prazna.</p>
         </div>
         <div class="cart-modal-footer">
-            <button class="btn btn-primary" id="checkout">Zavrsi porudzbinu</button>
+            <button class="btn btn-primary" id="checkout">Završi porudžbinu</button>
         </div>
     </div>
 
@@ -310,7 +318,7 @@ session_start();
             }
 
             <?php if (!isset($_SESSION['user_id'])): ?>
-                alert('Morate biti prijavljeni da biste zavrsili porudzbinu.');
+                alert('Morate biti prijavljeni da biste završili porudžbinu.');
                 return;
             <?php endif; ?>
 
@@ -319,7 +327,7 @@ session_start();
                 method: 'POST',
                 data: { cart: cart },
                 success: function(response) {
-                    alert('Porudzbina je uspesno zavrsena.');
+                    alert('Porudžbina je uspešno završena.');
                     cart = [];
                     updateCart();
                     $('#cartModal').hide();
@@ -345,7 +353,7 @@ session_start();
                             <input type="email" class="form-control" id="loginEmail" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="loginPassword">Sifra</label>
+                            <label for="loginPassword">Šifra</label>
                             <input type="password" class="form-control" id="loginPassword" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Prijavi se</button>
@@ -381,7 +389,7 @@ session_start();
                             <input type="email" class="form-control" id="registerEmail" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="registerPassword">Sifra</label>
+                            <label for="registerPassword">Šifra</label>
                             <input type="password" class="form-control" id="registerPassword" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Registruj</button>

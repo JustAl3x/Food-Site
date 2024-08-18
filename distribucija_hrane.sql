@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Aug 12, 2024 at 11:45 AM
--- Server version: 5.7.39
--- PHP Version: 8.2.0
+-- Host: 127.0.0.1
+-- Generation Time: Aug 18, 2024 at 02:56 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `Distribucija_hrane`
+-- Database: `distribucija_hrane`
 --
 
 -- --------------------------------------------------------
@@ -33,14 +33,7 @@ CREATE TABLE `admin` (
   `prezime` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `ime`, `prezime`, `email`, `password`) VALUES
-(1, 'Aleksandar', 'Markovic', 'Aleksandar.markovic@gmail.com', '123');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -52,15 +45,8 @@ CREATE TABLE `komentari` (
   `id` int(11) NOT NULL,
   `proizvod_id` int(11) NOT NULL,
   `komentar` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `komentari`
---
-
-INSERT INTO `komentari` (`id`, `proizvod_id`, `komentar`, `created_at`) VALUES
-(4, 6, 'Komentar za picu\r\n', '2024-08-12 01:07:05');
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -74,14 +60,7 @@ CREATE TABLE `korisnici` (
   `prezime` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `korisnici`
---
-
-INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `email`, `password`) VALUES
-(1, 'Alekssandar', 'Markovic', 'sale123@gmail.com.com', '12');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -93,15 +72,7 @@ CREATE TABLE `porudzbine` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `datum` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `porudzbine`
---
-
-INSERT INTO `porudzbine` (`id`, `user_id`, `datum`) VALUES
-(1, 1, '2024-08-12 13:25:37'),
-(2, 2, '2024-08-12 13:31:18');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -115,18 +86,7 @@ CREATE TABLE `porudzbine_stavke` (
   `proizvod_id` int(11) NOT NULL,
   `kolicina` int(11) NOT NULL,
   `cena` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `porudzbine_stavke`
---
-
-INSERT INTO `porudzbine_stavke` (`id`, `porudzbina_id`, `proizvod_id`, `kolicina`, `cena`) VALUES
-(1, 1, 6, 1, 1699),
-(2, 1, 7, 1, 199),
-(3, 1, 8, 1, 259),
-(4, 2, 7, 1, 199),
-(5, 2, 8, 2, 259);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -137,22 +97,22 @@ INSERT INTO `porudzbine_stavke` (`id`, `porudzbina_id`, `proizvod_id`, `kolicina
 CREATE TABLE `proizvodi` (
   `id` int(11) NOT NULL,
   `ime` varchar(100) NOT NULL,
-  `opis` text,
+  `opis` text DEFAULT NULL,
   `cena` decimal(10,2) NOT NULL,
   `kategorija` varchar(50) DEFAULT NULL,
   `slika` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `proizvodi`
 --
 
 INSERT INTO `proizvodi` (`id`, `ime`, `opis`, `cena`, `kategorija`, `slika`) VALUES
-(6, 'Pica', 'Pica sa kackavaljem i pecurkama.', '1699.00', 'Pekarski proizvodi', 'slike/pizza.jpg'),
-(7, 'Narandza', 'Prirodna sveza i socna narandza. ', '199.00', 'Voce', 'slike/narandza.jpg'),
-(8, 'Paradajz', 'Paradajz iz baste organski.', '259.00', 'Povrce', 'slike/paradajz.jpeg'),
-(9, 'Biftek', 'Teleci biftek najveceg kvaliteta.', '2899.00', 'Meso', 'slike/biftek.jpg'),
-(10, 'Milksejk', 'Osvezavajuci milksejk sa ukusima cokolade i jagode.', '1299.00', 'Mlecni proizvodi', 'slike/milksejk.jpg');
+(6, 'Pica', 'Pica sa kackavaljem i pecurkama.', 1699.00, 'Pekarski proizvodi', 'slike/pizza.jpg'),
+(7, 'Narandza', 'Prirodna sveza i socna narandza. ', 199.00, 'Voce', 'slike/narandza.jpg'),
+(8, 'Paradajz', 'Paradajz iz baste organski.', 259.00, 'Povrce', 'slike/paradajz.jpeg'),
+(9, 'Biftek', 'Teleci biftek najvećeg kvaliteta.', 2899.00, 'Meso', 'slike/biftek.jpg'),
+(10, 'Milksejk', 'Osvezavajuci milksejk sa ukusima cokolade i jagode.', 1299.00, 'Mlecni proizvodi', 'slike/milksejk.jpg');
 
 --
 -- Indexes for dumped tables
@@ -208,7 +168,7 @@ ALTER TABLE `proizvodi`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `komentari`
@@ -220,19 +180,19 @@ ALTER TABLE `komentari`
 -- AUTO_INCREMENT for table `korisnici`
 --
 ALTER TABLE `korisnici`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `porudzbine`
 --
 ALTER TABLE `porudzbine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `porudzbine_stavke`
 --
 ALTER TABLE `porudzbine_stavke`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `proizvodi`
